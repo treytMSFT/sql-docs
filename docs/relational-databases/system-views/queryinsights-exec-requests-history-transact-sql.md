@@ -38,10 +38,10 @@ monikerRange: "=fabric"
 | `root_batch_id` | **uniqueidentifier** | ID for the main group of queries (if nested). Nullable.|
 | `query_hash` | **varchar(200)** | Binary hash value calculated on the query and used to identify queries with similar logic. You can use the query hash to correlate between Query Insight views. For more information, see [Query Insights - Aggregation](/fabric/data-warehouse/query-insights#similar-queries).|
 | `label` | **varchar(8000)** | Optional label string associated with some SELECT query statements.|
-| `allocated_cpu_time_ms` | **bigint** | Shows how much CPU time was allocated for a query’s execution.|
+| `allocated_cpu_time_ms` | **bigint** | Shows the total time of CPU(s) that was allocated for a query’s execution.|
 | `data_scanned_remote_storage_mb` | **bigint** | Shows how much data was scanned/read from remote storage (One Lake).|
-| `data_scanned_memory_mb` | **bigint** | Shows how much data was scanned from memory. Data scanned from disk and memory together indicates how much data was read from cache. |
-| `data_scanned_disk_mb` | **bigint** | Shows how much data was scanned/read from disk. |
+| `data_scanned_memory_mb` | **bigint** | Shows how much data was scanned from local memory. Data scanned from disk and memory together indicates how much data was read from cache. |
+| `data_scanned_disk_mb` | **bigint** | Shows how much data was scanned/read from local disk. Data scanned from disk and memory together indicates how much data was read from cache. |
 
 
 ## Permissions
