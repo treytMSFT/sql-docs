@@ -20,7 +20,7 @@ monikerRange: "=azuresqldb-current||>=sql-server-2016||>=sql-server-linux-2017||
 
  The illustration below shows examples of **MultiPolygon** instances.  
   
- :::image type="content" source="media/multipolygon/multipolygon.gif" alt-text="Images of examples of geometry MultiPolygon instances.":::  
+ :::image type="content" source="media/multipolygon/multipolygon.gif" alt-text="Diagram of examples of geometry MultiPolygon instances.":::  
   
  As shown in the illustration:  
   

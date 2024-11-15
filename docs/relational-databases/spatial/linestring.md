@@ -22,7 +22,7 @@ monikerRange: "=azuresqldb-current||>=sql-server-2016||>=sql-server-linux-2017||
 ## LineString instances
  The following illustration shows examples of **LineString** instances.  
   
- :::image type="content" source="media/linestring/linestring.gif" alt-text="Images of examples of geometry LineString instances.":::  
+ :::image type="content" source="media/linestring/linestring.gif" alt-text="Diagram of examples of geometry LineString instances.":::  
   
 As shown in the illustration:  
   

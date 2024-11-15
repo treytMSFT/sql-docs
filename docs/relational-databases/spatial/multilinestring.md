@@ -22,7 +22,7 @@ monikerRange: "=azuresqldb-current||>=sql-server-2016||>=sql-server-linux-2017||
 ## MultiLineString instances
  The following illustration shows examples of **MultiLineString** instances.  
   
- :::image type="content" source="media/multilinestring/multilinestring.gif" alt-text="Images of examples of geometry MultiLineString instances.":::  
+ :::image type="content" source="media/multilinestring/multilinestring.gif" alt-text="Diagram of examples of geometry MultiLineString instances.":::  
   
  As shown in the illustration:  
   

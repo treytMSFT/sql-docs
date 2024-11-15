@@ -18,7 +18,7 @@ A **CircularString** is a collection of zero or more continuous circular arc seg
 ## CircularString instances  
  The drawing below shows valid **CircularString** instances:  
   
- :::image type="content" source="media/circularstring/circularstring.gif" alt-text="Images of CircularString example spatial measurements.":::
+ :::image type="content" source="media/circularstring/circularstring.gif" alt-text="Diagram of CircularString example spatial measurements.":::
   
 ### Accepted instances
  A **CircularString** instance is accepted if it is either empty or contains an odd number of points, n, where n > 1. The following **CircularString** instances are accepted.  

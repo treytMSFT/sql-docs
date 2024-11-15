@@ -25,7 +25,7 @@ If a **CompoundCurve** contains a sequence of multiple **CircularString** and **
 ## CompoundCurve instances
 The following illustration shows valid **CompoundCurve** types.  
   
-:::image type="content" source="media/compoundcurve/compoundcurve.gif" alt-text="Images of CompoundCurve examples.":::  
+:::image type="content" source="media/compoundcurve/compoundcurve.gif" alt-text="Diagram of CompoundCurve examples.":::  
  
 ### Accepted instances
  **CompoundCurve** instance is accepted if it is an empty instance or meets the following criteria.  
@@ -172,7 +172,7 @@ SET @g = geometry::Parse('COMPOUNDCURVE(CIRCULARSTRING(7 5 4 2, 5 7 4 2, 3 5 4 2
   
 <a id="i-illustrating-why-circularstring-instances-must-be-explicitly-declared"></a>
 
-### I. Illustrat why CircularString instances must be explicitly declared
+### I. Why CircularString instances must be explicitly declared
  The following example shows why `CircularString` instances must be explicitly declared. The programmer is trying to store a circle in a `CompoundCurve` instance.  
   
 ```sql  
