@@ -5,7 +5,7 @@ description: Learn how to mitigate naming conflicts for Microsoft Entra logins a
 author: tameikal-msft
 ms.author: talawren
 ms.reviewer: vanto, mathoma
-ms.date: 02/21/2024
+ms.date: 11/20/2024
 ms.service: azure-sql
 ms.subservice: security
 ms.topic: conceptual
