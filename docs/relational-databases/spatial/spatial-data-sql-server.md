@@ -18,7 +18,7 @@ helpviewer_keywords:
 monikerRange: "=azuresqldb-current||>=sql-server-2016||>=sql-server-linux-2017||=azuresqldb-mi-current||=fabric"
 ---
 # Spatial Data
-[!INCLUDE [SQL Server Azure SQL Database Azure SQL Managed Instance Fabric SQL endpoint Fabric DW](../../includes/applies-to-version/sql-asdb-asdbmi-fabricse-fabricdw.md)]
+[!INCLUDE [SQL Server Azure SQL Database Azure SQL Managed Instance Fabric SQL endpoint Fabric DW FabricSQLDB](../../includes/applies-to-version/sql-asdb-asdbmi-fabricse-fabricdw-fabricsqldb.md)]  
 
   Spatial data represents information about the physical location and shape of geometric objects. These objects can be point locations or more complex objects such as countries/regions, roads, or lakes.  
   
@@ -30,6 +30,10 @@ monikerRange: "=azuresqldb-current||>=sql-server-2016||>=sql-server-linux-2017||
   
  Both data types are implemented as .NET common language runtime (CLR) data types in [!INCLUDE [ssNoVersion](../../includes/ssnoversion-md.md)].  
   
+## Limitations
+
+In [!INCLUDE [fabric-sqldb](../../includes/fabric-sqldb.md)], **geography** and **geometry** data types are supported but cannot be [mirrored to the Fabric OneLake](/fabric/database/sql/mirroring-overview).
+
 <a id="reltasks"></a>
 
 ## Related Tasks
@@ -44,6 +48,7 @@ monikerRange: "=azuresqldb-current||>=sql-server-2016||>=sql-server-linux-2017||
   
  [Create, Modify, and Drop Spatial Indexes](create-modify-and-drop-spatial-indexes.md)  
  Provides information about creating, altering, and dropping a spatial index.  
+
 ## Spatial tools open-source project
 
 [!INCLUDE [Spatial tools project information](../../includes/spatial-tools.md)]
