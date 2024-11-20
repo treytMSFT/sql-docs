@@ -37,7 +37,7 @@ monikerRange: ">=aps-pdw-2016||=azuresqldb-current||=azure-sqldw-latest||>=sql-s
   
 [!INCLUDE [entra-id](../../includes/entra-id-hard-coded.md)]
 
-**Users based on logins in master** - This is the most common type of user.  
+**Users based on logins in master**
   
 -   User based on a login based on a Windows Active Directory account. `CREATE USER [Contoso\Fritz];`     
 -   User based on a login based on a Windows group. `CREATE USER [Contoso\Sales];`   
@@ -45,6 +45,9 @@ monikerRange: ">=aps-pdw-2016||=azuresqldb-current||=azure-sqldw-latest||>=sql-s
 -   User based on a Microsoft Entra login. `CREATE USER [bob@contoso.com] FROM LOGIN [bob@contoso.com]`
     > [!NOTE]
     > [Microsoft Entra server principals (logins)](/azure/azure-sql/database/authentication-azure-ad-logins) are currently in public preview for Azure SQL Database.
+
+    > [!NOTE]
+    > Logins, and therefore users based on logins, are not supported in SQL database in Microsoft Fabric.
 
 **Users that authenticate at the database** - Recommended to help make your database more portable.  
  Always allowed in [!INCLUDE[ssSDS_md](../../includes/sssds-md.md)]. Only allowed in a contained database in [!INCLUDE[ssNoVersion_md](../../includes/ssnoversion-md.md)].  
@@ -133,6 +136,7 @@ CREATE USER user_name
     [ WITH <limited_options_list> [ ,... ] ]   
 [ ; ]  
 
+
 <limited_options_list> ::=  
       DEFAULT_SCHEMA = schema_name 
     | DEFAULT_LANGUAGE = { NONE | lcid | language name | language alias }   
@@ -142,7 +146,6 @@ CREATE USER user_name
 Syntax for Azure Synapse Analytics
 
 ```syntaxsql
-  
 CREATE USER user_name   
     [ { { FOR | FROM } { LOGIN login_name }   
       | WITHOUT LOGIN  
@@ -160,31 +163,33 @@ Syntax for [!INCLUDE [fabric-sqldb](../../includes/fabric-sqldb.md)]
 ```syntaxsql 
 CREATE USER   
     {  
-    Microsoft_Entra_principal FROM EXTERNAL PROVIDER [WITH OBJECT_ID = 'objectid'] 
+    Microsoft_Entra_principal FROM EXTERNAL PROVIDER [ WITH <limited_options_list> [ ,... ] ]    
+    | Microsoft_Entra_principal WITH <options_list> [ ,... ] 
     }  
  [ ; ]  
   
 -- Users that cannot authenticate   
 CREATE USER user_name   
-    {    WITHOUT LOGIN [ WITH <options_list> [ ,... ] ]  
+    {    WITHOUT LOGIN [ WITH DEFAULT_SCHEMA = schema_name ]  
        | { FOR | FROM } CERTIFICATE cert_name   
        | { FOR | FROM } ASYMMETRIC KEY asym_key_name   
     }  
  [ ; ]  
   
+<limited_options_list> ::=  
+      DEFAULT_SCHEMA = schema_name  
+    | OBJECT_ID = 'objectid'
+
 <options_list> ::=  
       DEFAULT_SCHEMA = schema_name  
-    | DEFAULT_LANGUAGE = { NONE | lcid | language name | language alias }   
+    | SID = sid  
+    | TYPE = { X | E }
 
--- SQL Database syntax when connected to a federation member  
-CREATE USER user_name  
-[;]
 ```
 
 Syntax for Parallel Data Warehouse  
 
 ```syntaxsql
- 
 CREATE USER user_name   
     [ { { FOR | FROM }  
       {   
@@ -219,7 +224,7 @@ CREATE USER user_name
 
  For Microsoft Entra principals, the CREATE USER syntax requires:
 
-- UserPrincipalName of the Microsoft Entra object for Microsoft Entra Users.
+- UserPrincipalName of the Microsoft Entra object for Microsoft Entra users.
 
   - `CREATE USER [bob@contoso.com] FROM EXTERNAL PROVIDER;`  
   - `CREATE USER [alice@fabrikam.onmicrosoft.com] FROM EXTERNAL PROVIDER;`
@@ -252,17 +257,24 @@ CREATE USER user_name
  Specifies the asymmetric key for which the database user is being created.  
   
 #### DEFAULT_LANGUAGE = *{ NONE \| \<lcid> \| \<language name> \| \<language salias> }*  
- **Applies to**: [!INCLUDE[ssSQL11](../../includes/sssql11-md.md)] and later, [!INCLUDE[sssds](../../includes/sssds-md.md)], [!INCLUDE [fabric-sqldb](../../includes/fabric-sqldb.md)]
+ **Applies to**: [!INCLUDE[ssSQL11](../../includes/sssql11-md.md)] and later, [!INCLUDE[sssds](../../includes/sssds-md.md)]
   
  Specifies the default language for the new user. If a default language is specified for the user and the default language of the database is later changed, the users default language remains as specified. If no default language is specified, the default language for the user will be the default language of the database. If the default language for the user isn't specified and the default language of the database is later changed, the default language of the user will change to the new default language for the database.  
   
 > [!IMPORTANT]  
 >  *DEFAULT_LANGUAGE* is used only for a contained database user.  
-  
+
 #### SID = *sid*  
- **Applies to**: [!INCLUDE[ssSQL11](../../includes/sssql11-md.md)] and later.  
+ **Applies to**: [!INCLUDE[ssSQL11](../../includes/sssql11-md.md)] and later, and to SQL database in Microsoft Fabric.  
   
- Applies only to users with passwords ([!INCLUDE[ssNoVersion](../../includes/ssnoversion-md.md)] authentication) in a contained database. Specifies the SID of the new database user. If this option isn't selected, [!INCLUDE[ssNoVersion](../../includes/ssnoversion-md.md)] automatically assigns a SID. Use the SID parameter to create users in multiple databases that have the same identity (SID). This is useful when creating users in multiple databases to prepare for Always On failover. To determine the SID of a user, query sys.database_principals.  
+ In [!INCLUDE[ssSQL11](../../includes/sssql11-md.md)] and later, applies only to users with passwords ([!INCLUDE[ssNoVersion](../../includes/ssnoversion-md.md)] authentication) in a contained database. Specifies the SID of the new database user. If this option isn't selected, [!INCLUDE[ssNoVersion](../../includes/ssnoversion-md.md)] automatically assigns a SID. Use the SID parameter to create users in multiple databases that have the same identity (SID). This is useful when creating users in multiple databases to prepare for Always On failover. To determine the SID of a user, query sys.database_principals.  
+
+In SQL database in Microsoft Fabric, `sid` should be a valid id of the specified Microsoft Entra principal. If the principal is a user or a group, the id should be a Microsoft Entra object id of the user/group. If the Microsoft Entra principal is a service principal (an application or a managed identity), the id should be an application id (or a client id). The specified id must be a `binary(16)` value. The [!INCLUDE[ssDE](../../includes/ssde-md.md)] doesn't validate the specified id in Microsoft Entra. The `SID` arguemnt must be used together with `TYPE`.
+
+#### TYPE = [ E | X ]
+ **Applies to**: SQL database in Microsoft Fabric. 
+
+Specifies the type of a Microsoft Entra principal. `E` indicates the principal is a user or a service principal (an application or a managed identity). `X` indicates the principal is a group.
   
 #### ALLOW_ENCRYPTED_VALUE_MODIFICATIONS = [ ON | **OFF** ]  
  **Applies to**: [!INCLUDE[sssql16-md](../../includes/sssql16-md.md)] and later, [!INCLUDE[ssSDS](../../includes/sssds-md.md)].  
@@ -275,7 +287,13 @@ CREATE USER user_name
 #### FROM EXTERNAL PROVIDER </br>
  **Applies to**: [!INCLUDE[sssds](../../includes/sssds-md.md)], Azure SQL Managed Instance, [!INCLUDE [fabric-sqldb](../../includes/fabric-sqldb.md)]
 
-Specifies that the user is for Microsoft Entra authentication.
+Specifies that the principal is for Microsoft Entra authentication. [!INCLUDE[ssNoVersion](../../includes/ssnoversion-md.md)] automatically validates the provided principal name in Microsoft Entra. 
+
+If the principal issuing the `CREATE USER` statement is a Microsoft Entra user principal, the principal (or principal's group) must be in the  [Directory Readers role](/entra/identity/role-based-access-control/permissions-reference#directory-readers) in Microsoft Entra.
+
+In [!INCLUDE[sssds](../../includes/sssds-md.md)] and Azure SQL Managed Instance, if the principal issuing the `CREATE USER` statement is a service principal, the identity of the database server or the managed instance must be in the  [Directory Readers role](/entra/identity/role-based-access-control/permissions-reference#directory-readers) in Microsoft Entra.
+
+In [!INCLUDE [fabric-sqldb](../../includes/fabric-sqldb.md)], `FROM EXTERNAL PROVIDER` is not allowed if a principal issuing `CREATE USER` is a service principal in Microsoft Entra. Service principals must use `TYPE` and `SID` arugments to create users for Microsoft Entra principals.
 
 #### WITH OBJECT_ID = *'objectid'*
  **Applies to**: [!INCLUDE[sssds](../../includes/sssds-md.md)], Azure SQL Managed Instance, [!INCLUDE [fabric-sqldb](../../includes/fabric-sqldb.md)]
@@ -550,11 +568,59 @@ GO
 
 ### J. Create a contained database user from a Microsoft Entra principal
 
-The following syntax creates a Microsoft Entra user `bob@contoso.com`, in a database without an associated login in `master`:
+The following syntax creates a Microsoft Entra user `bob@contoso.com`, in a database without an associated login in `master`. The [!INCLUDE[ssDE](../../includes/ssde-md.md)] validates the specified user exists in Microsoft Entra.
 
 ```sql
 CREATE USER [bob@contoso.com] FROM EXTERNAL PROVIDER;
 GO
+```
+
+### K. Create a contained database user from a Microsoft Entra principal without validation
+
+ **Applies to**: [!INCLUDE [fabric-sqldb](../../includes/fabric-sqldb.md)]
+
+The examples in this section create database users for Microsoft Entra principals, without validating principal names in Microsoft Entra.
+
+The following example creates a database user for the Microsoft Entra user, named `bob@contoso.com`, setting the sid of the new user to the object id of the Microsoft Entra user.
+
+```sql
+DECLARE @principal_name SYSNAME = 'bob@contoso.com';
+DECLARE @objectId UNIQUEIDENTIFIER = 'f82226bf-ca6c-35a5-32f1-a0e8b34f5f5b'; -- user's object id in Microsoft Entra
+
+-- Convert the guid to the right type
+DECLARE @castObjectId NVARCHAR(MAX) = CONVERT(VARCHAR(MAX), CONVERT (VARBINARY(16), @objectId), 1);
+
+-- Construct command: CREATE USER [@principal_name] WITH SID = @castObjectId, TYPE = E;
+DECLARE @cmd NVARCHAR(MAX) = N'CREATE USER [' + @principal_name + '] WITH SID = ' + @castObjectId + ', TYPE = E;'
+EXEC (@cmd);
+```
+
+The following example creates a database user for the Microsoft Entra service principal, named `HRApp`, setting the sid of the new user to the client id of the service principal in Microsoft Entra.
+
+```sql
+DECLARE @principal_name SYSNAME = 'HRApp';
+DECLARE @clientId UNIQUEIDENTIFIER = '1234f999-ec2b-abcd-b199-a0e8b34f5f5b'; -- principal's client id in Microsoft Entra
+
+-- Convert the guid to the right type
+DECLARE @castClientId NVARCHAR(MAX) = CONVERT(VARCHAR(MAX), CONVERT (VARBINARY(16), @clientId), 1);
+
+-- Construct command: CREATE USER [@principal_name] WITH SID = @castClientId, TYPE = E;
+DECLARE @cmd NVARCHAR(MAX) = N'CREATE USER [' + @principal_name + '] WITH SID = ' + @castClientId + ', TYPE = E;'
+EXEC (@cmd);
+```
+
+The following example creates a database user for the Microsoft Entra group, named `HR`, setting the sid of the new user to the object id of the group.
+
+```sql
+DECLARE @group_name SYSNAME = 'HR';
+DECLARE @objectId UNIQUEIDENTIFIER = 'f9991234-ec2b-abcd-b199-a0e8b34f5f5b'; -- principal's object id in Microsoft Entra
+
+-- Convert the guid to the right type
+DECLARE @castObjectId NVARCHAR(MAX) = CONVERT(VARCHAR(MAX), CONVERT (VARBINARY(16), @objectId), 1);
+
+-- Construct command: CREATE USER [@groupName] WITH SID = @castObjectId, TYPE = X;
+DECLARE @cmd NVARCHAR(MAX) = N'CREATE USER [' + @principal_name + '] WITH SID = ' + @castObjectId + ', TYPE = X;'
+EXEC (@cmd);
 ```
 
 ## Next steps

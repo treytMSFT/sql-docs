@@ -12,13 +12,13 @@ ms.topic: conceptual
 monikerRange: "= azuresql || = azuresql-db || = azuresql-mi ||=fabricsql"
 ---
 
-# Microsoft Entra logins and users with nonunique display names
-
-[!INCLUDE[appliesto-sqldb-sqlmi](../includes/appliesto-sqldb-sqlmi.md)]
+# Microsoft Entra logins and users with nonunique display names (preview)
+[!INCLUDE [appliesto-sqldb-sqlmi-fabricsqldb](../includes/appliesto-sqldb-sqlmi-fabricsqldb.md)]
 
 This article teaches you how to use the T-SQL `Object_ID` syntax to create Microsoft Entra logins and users with nonunique display names in Azure SQL Database, Fabric SQL database, and Azure SQL Managed Instance. 
 
 > [!NOTE]
+> Using `WITH OBJECT_ID` to create users and logins in Azure SQL is currently in preview.
 > You can create users in Fabric SQL database, but not logins.
 
 ## Overview
