@@ -3,8 +3,8 @@ title: CREATE USER (Transact-SQL)
 description: CREATE USER (Transact-SQL)
 author: VanMSFT
 ms.author: vanto
-ms.reviewer: wiassaf
-ms.date: 10/28/2024
+ms.reviewer: wiassaf, jaszymas
+ms.date: 11/20/2024
 ms.service: sql
 ms.subservice: t-sql
 ms.topic: reference
@@ -33,11 +33,11 @@ monikerRange: ">=aps-pdw-2016||=azuresqldb-current||=azure-sqldw-latest||>=sql-s
 
 [!INCLUDE [SQL Server Azure SQL Database Azure SQL Managed Instance Azure Synapse Analytics PDW FabricSQLDB](../../includes/applies-to-version/sql-asdb-asdbmi-asa-pdw-fabricsqldb.md)]
 
-  Adds a user to the current database. The 13 types of users are listed below with a sample of the most basic syntax:  
+  Adds a user to the current database. The 13 types of users are listed with a sample of the most basic syntax:  
   
 [!INCLUDE [entra-id](../../includes/entra-id-hard-coded.md)]
 
-**Users based on logins in master**
+**Users based on logins in `master`**
   
 -   User based on a login based on a Windows Active Directory account. `CREATE USER [Contoso\Fritz];`     
 -   User based on a login based on a Windows group. `CREATE USER [Contoso\Sales];`   
@@ -229,7 +229,7 @@ CREATE USER user_name
   - `CREATE USER [bob@contoso.com] FROM EXTERNAL PROVIDER;`  
   - `CREATE USER [alice@fabrikam.onmicrosoft.com] FROM EXTERNAL PROVIDER;`
 
-- [Microsoft Entra server principals (logins)](/azure/azure-sql/database/authentication-azure-ad-logins) introduces creating users that are mapped to Microsoft Entra logins in the virtual master database. `CREATE USER [bob@contoso.com] FROM LOGIN [bob@contoso.com]`
+- [Microsoft Entra server principals (logins)](/azure/azure-sql/database/authentication-azure-ad-logins) introduces creating users that are mapped to Microsoft Entra logins in the virtual `master` database. For example, `CREATE USER [bob@contoso.com] FROM LOGIN [bob@contoso.com];`
 
 - Microsoft Entra users and service principals (applications) that are members of more than 2048 Microsoft Entra security groups aren't supported to log into databases in Azure SQL Database, Azure SQL Managed Instance, or Azure Synapse.
 - DisplayName of Microsoft Entra object for Microsoft Entra groups and Microsoft Entra Applications. If you had the *Nurses* security group, you would use:  
@@ -269,7 +269,7 @@ CREATE USER user_name
   
  In [!INCLUDE[ssSQL11](../../includes/sssql11-md.md)] and later, applies only to users with passwords ([!INCLUDE[ssNoVersion](../../includes/ssnoversion-md.md)] authentication) in a contained database. Specifies the SID of the new database user. If this option isn't selected, [!INCLUDE[ssNoVersion](../../includes/ssnoversion-md.md)] automatically assigns a SID. Use the SID parameter to create users in multiple databases that have the same identity (SID). This is useful when creating users in multiple databases to prepare for Always On failover. To determine the SID of a user, query sys.database_principals.  
 
-In SQL database in Microsoft Fabric, `sid` should be a valid id of the specified Microsoft Entra principal. If the principal is a user or a group, the id should be a Microsoft Entra object id of the user/group. If the Microsoft Entra principal is a service principal (an application or a managed identity), the id should be an application id (or a client id). The specified id must be a `binary(16)` value. The [!INCLUDE[ssDE](../../includes/ssde-md.md)] doesn't validate the specified id in Microsoft Entra. The `SID` arguemnt must be used together with `TYPE`.
+In SQL database in Microsoft Fabric, `sid` should be a valid ID of the specified Microsoft Entra principal. If the principal is a user or a group, the ID should be a Microsoft Entra object ID of the user/group. If the Microsoft Entra principal is a service principal (an application or a managed identity), the ID should be an application ID (or a client ID). The specified ID must be a `binary(16)` value. The [!INCLUDE[ssDE](../../includes/ssde-md.md)] doesn't validate the specified ID in Microsoft Entra. The `SID` arguemnt must be used together with `TYPE`.
 
 #### TYPE = [ E | X ]
  **Applies to**: SQL database in Microsoft Fabric. 
@@ -335,14 +335,14 @@ Use the syntax extension `FROM EXTERNAL PROVIDER` to create server-level Microso
 CREATE USER [Microsoft_Entra_principal] FROM LOGIN [Microsoft Entra login];
 ```
 
-When creating the user in the Azure SQL database, the *login_name* must correspond to an existing Microsoft Entra login, or else using the **FROM EXTERNAL PROVIDER** clause will only create a Microsoft Entra user without a login in the master database. For example, this command will create a contained user:
+When creating the user in the Azure SQL database, the *login_name* must correspond to an existing Microsoft Entra login, or else using the **FROM EXTERNAL PROVIDER** clause will only create a Microsoft Entra user without a login in the `master` database. For example, this command will create a contained user:
 
 ```sql
 CREATE USER [bob@contoso.com] FROM EXTERNAL PROVIDER;
 ```
   
 ##  <a name="SyntaxSummary"></a> Syntax Summary  
- **Users based on logins in master**  
+ **Users based on logins in `master`**  
   
  The following list shows possible syntax for users based on logins. The default schema options aren't listed.  
   
@@ -367,11 +367,11 @@ CREATE USER [bob@contoso.com] FROM EXTERNAL PROVIDER;
 -   `CREATE USER [Domain1\WindowsGroupManagers]`  
 -   `CREATE USER Barry WITH PASSWORD = 'sdjklalie8rew8337!$d'`  
   
-**Users based on Windows principals without logins in master**  
+**Users based on Windows principals without logins in the `master` system database**  
   
- The following list shows possible syntax for users that have access to the [!INCLUDE[ssDE](../../includes/ssde-md.md)] through a Windows group but don't have a login in **master**. This syntax can be used in all types of databases. The default schema and language options aren't listed.  
+ The following list shows possible syntax for users that have access to the [!INCLUDE[ssDE](../../includes/ssde-md.md)] through a Windows group but don't have a login in the `master` system database. This syntax can be used in all types of databases. The default schema and language options aren't listed.  
   
- This syntax is similar to users based on logins in master, but this category of user doesn't have a login in master. The user must have access to the [!INCLUDE[ssDE](../../includes/ssde-md.md)] through a Windows group login.  
+ This syntax is similar to users based on logins in `master`, but this category of user doesn't have a login in `master`. The user must have access to the [!INCLUDE[ssDE](../../includes/ssde-md.md)] through a Windows group login.  
   
  This syntax is similar to contained database users based on Windows principals, but this category of user doesn't get new access to the [!INCLUDE[ssDE](../../includes/ssde-md.md)].  
   
@@ -396,11 +396,11 @@ CREATE USER [bob@contoso.com] FROM EXTERNAL PROVIDER;
  Creating a user grants access to a database but doesn't automatically grant any access to the objects in a database. After creating a user, common actions are to add users to database roles that have permission to access database objects, or grant object permissions to the user. For information about designing a permissions system, see [Getting Started with Database Engine Permissions](../../relational-databases/security/authentication-access/getting-started-with-database-engine-permissions.md).  
   
 ### Special Considerations for Contained Databases  
- When connecting to a contained database, if the user doesn't have a login in the **master** database, the connection string must include the contained database name as the initial catalog. The initial catalog parameter is always required for a contained database user with password.  
+ When connecting to a contained database, if the user doesn't have a login in the `master` database, the connection string must include the contained database name as the initial catalog. The initial catalog parameter is always required for a contained database user with password.  
   
  In a contained database, creating users helps separate the database from the instance of the [!INCLUDE[ssDE](../../includes/ssde-md.md)] so that the database can easily be moved to another instance of [!INCLUDE[ssNoVersion](../../includes/ssnoversion-md.md)]. For more information, see [Contained Databases](../../relational-databases/databases/contained-databases.md) and [Contained Database Users - Making Your Database Portable](../../relational-databases/security/contained-database-users-making-your-database-portable.md). To change a database user from a user based on a [!INCLUDE[ssNoVersion](../../includes/ssnoversion-md.md)] authentication login to a contained database user with password, see [sp_migrate_user_to_contained &#40;Transact-SQL&#41;](../../relational-databases/system-stored-procedures/sp-migrate-user-to-contained-transact-sql.md).  
   
- In a contained database, users don't have to have logins in the **master** database. [!INCLUDE[ssDE](../../includes/ssde-md.md)] administrators should understand that access to a contained database can be granted at the database level, instead of the [!INCLUDE[ssDE](../../includes/ssde-md.md)] level. For more information, see [Security Best Practices with Contained Databases](../../relational-databases/databases/security-best-practices-with-contained-databases.md).  
+ In a contained database, users don't have to have logins in the `master` database. [!INCLUDE[ssDE](../../includes/ssde-md.md)] administrators should understand that access to a contained database can be granted at the database level, instead of the [!INCLUDE[ssDE](../../includes/ssde-md.md)] level. For more information, see [Security Best Practices with Contained Databases](../../relational-databases/databases/security-best-practices-with-contained-databases.md).  
   
  When using contained database users on [!INCLUDE [ssazure-sqldb](../../includes/ssazure-sqldb.md)], configure access using a database-level firewall rule, instead of a server-level firewall rule. For more information, see [sp_set_database_firewall_rule &#40;Azure SQL Database&#41;](../../relational-databases/system-stored-procedures/sp-set-database-firewall-rule-azure-sql-database.md).
  
@@ -519,7 +519,7 @@ CREATE USER CarmenW WITH PASSWORD = 'a8ea v*(Rd##+'
 ```  
   
 ### H. Creating a user to copy encrypted data  
- The following example creates a user that can copy data that is protected by the Always Encrypted feature from  one set of tables, containing encrypted columns, to another set of tables with encrypted columns (in the same or a different database).  For more information, see [Migrate Sensitive Data Protected by Always Encrypted](../../relational-databases/security/encryption/migrate-sensitive-data-protected-by-always-encrypted.md).  
+ The following example creates a user that can copy data that is protected by the Always Encrypted feature from  one set of tables, containing encrypted columns, to another set of tables with encrypted columns (in the same or a different database). For more information, see [Migrate Sensitive Data Protected by Always Encrypted](../../relational-databases/security/encryption/migrate-sensitive-data-protected-by-always-encrypted.md).  
   
 **Applies to**: [!INCLUDE[sssql16-md](../../includes/sssql16-md.md)] and later, [!INCLUDE[ssSDS](../../includes/sssds-md.md)].  
   
@@ -536,9 +536,7 @@ WITH
 
  To create a Microsoft Entra user from a Microsoft Entra login, use the following syntax.
 
- Sign in to your [logical server in Azure](/azure/azure-sql/database/logical-servers) or SQL Managed Instance using a Microsoft Entra login granted the `sysadmin` role in SQL Managed Instance, or `loginmanager` role in SQL Database. The following creates a Microsoft Entra user `bob@contoso.com`, from the login `bob@contoso.com`. This login was created in the [CREATE LOGIN](./create-login-transact-sql.md#examples) example.
-
-
+ Sign in to your [logical server in Azure](/azure/azure-sql/database/logical-servers) or SQL Managed Instance using a Microsoft Entra login granted the `sysadmin` role in SQL Managed Instance, or `loginmanager` role in SQL Database. The following T-SQL script creates a Microsoft Entra user `bob@contoso.com`, from the login `bob@contoso.com`. This login was created in the [CREATE LOGIN](./create-login-transact-sql.md#examples) example.
 
 ```sql
 CREATE USER [bob@contoso.com] FROM LOGIN [bob@contoso.com];
@@ -581,11 +579,11 @@ GO
 
 The examples in this section create database users for Microsoft Entra principals, without validating principal names in Microsoft Entra.
 
-The following example creates a database user for the Microsoft Entra user, named `bob@contoso.com`, setting the sid of the new user to the object id of the Microsoft Entra user.
+The following T-SQL example creates a database user for the Microsoft Entra user, named `bob@contoso.com`. Replace `<unique identifier sid>` with the SID of the new user to the object ID of the Microsoft Entra user.
 
 ```sql
 DECLARE @principal_name SYSNAME = 'bob@contoso.com';
-DECLARE @objectId UNIQUEIDENTIFIER = 'f82226bf-ca6c-35a5-32f1-a0e8b34f5f5b'; -- user's object id in Microsoft Entra
+DECLARE @objectId UNIQUEIDENTIFIER = '<unique identifier sid>'; -- user's object ID in Microsoft Entra
 
 -- Convert the guid to the right type
 DECLARE @castObjectId NVARCHAR(MAX) = CONVERT(VARCHAR(MAX), CONVERT (VARBINARY(16), @objectId), 1);
@@ -595,11 +593,11 @@ DECLARE @cmd NVARCHAR(MAX) = N'CREATE USER [' + @principal_name + '] WITH SID = 
 EXEC (@cmd);
 ```
 
-The following example creates a database user for the Microsoft Entra service principal, named `HRApp`, setting the sid of the new user to the client id of the service principal in Microsoft Entra.
+The following example creates a database user for the Microsoft Entra service principal, named `HRApp`. Replace `<unique identifier sid>` with the SID of the new user to the client ID of the service principal in Microsoft Entra.
 
 ```sql
 DECLARE @principal_name SYSNAME = 'HRApp';
-DECLARE @clientId UNIQUEIDENTIFIER = '1234f999-ec2b-abcd-b199-a0e8b34f5f5b'; -- principal's client id in Microsoft Entra
+DECLARE @clientId UNIQUEIDENTIFIER = '<unique identifier sid>'; -- principal's client ID in Microsoft Entra
 
 -- Convert the guid to the right type
 DECLARE @castClientId NVARCHAR(MAX) = CONVERT(VARCHAR(MAX), CONVERT (VARBINARY(16), @clientId), 1);
@@ -609,11 +607,11 @@ DECLARE @cmd NVARCHAR(MAX) = N'CREATE USER [' + @principal_name + '] WITH SID = 
 EXEC (@cmd);
 ```
 
-The following example creates a database user for the Microsoft Entra group, named `HR`, setting the sid of the new user to the object id of the group.
+The following example creates a database user for the Microsoft Entra group, named `HR`. Replace `<unique identifier sid>` with the SID of the new user to the object ID of the group.
 
 ```sql
 DECLARE @group_name SYSNAME = 'HR';
-DECLARE @objectId UNIQUEIDENTIFIER = 'f9991234-ec2b-abcd-b199-a0e8b34f5f5b'; -- principal's object id in Microsoft Entra
+DECLARE @objectId UNIQUEIDENTIFIER = '<unique identifier sid>'; -- principal's object ID in Microsoft Entra
 
 -- Convert the guid to the right type
 DECLARE @castObjectId NVARCHAR(MAX) = CONVERT(VARCHAR(MAX), CONVERT (VARBINARY(16), @objectId), 1);
