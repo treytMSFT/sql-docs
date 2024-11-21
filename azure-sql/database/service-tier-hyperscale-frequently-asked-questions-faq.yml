@@ -8,10 +8,10 @@ metadata:
   ms.custom: sqldbrb=1
   ms.devlang: 
   ms.topic: faq
-  author: dimitri-furman
-  ms.author: dfurman
-  ms.reviewer: wiassaf, mathoma
-  ms.date: 09/12/2024
+  author: WilliamDAssafMSFT
+  ms.author: wiassaf
+  ms.reviewer: dfurman, mathoma, dinethi
+  ms.date: 11/19/2024
 title: Azure SQL Database Hyperscale FAQ
 summary: |
   [!INCLUDE[appliesto-sqldb](../includes/appliesto-sqldb.md)]
@@ -323,7 +323,7 @@ sections:
       - question: |
           Can I perform geo-restore with a Hyperscale database?
         answer: |
-          Yes. Geo-restore is fully supported if geo-redundant storage is used. This is the default for new databases. Unlike point-in-time restore, geo-restore requires a size-of-data operation. Data files are copied in parallel, so the duration of this operation depends primarily on the size of the largest file in the database, rather than on total database size. Geo-restore time will be significantly shorter if the database is restored in the Azure region that is [paired](/azure/availability-zones/cross-region-replication-azure) with the region of the source database.
+          Yes. Geo-restore is fully supported if geo-redundant storage is used. This is the default for new databases. Unlike point-in-time restore, geo-restore requires a size-of-data operation. Data files are copied in parallel, so the duration of this operation depends primarily on the size of the largest file in the database, rather than on total database size. Geo-restore time will be significantly shorter if the database is restored in the Azure region that is [paired](/azure/reliability/cross-region-replication-azure) with the region of the source database.
           
       - question: |
           Can I set up geo-replication with a Hyperscale database?
@@ -359,6 +359,11 @@ sections:
           How can I minimize backup storage costs?
         answer: |
           Details on how to minimize the backup storage costs are captured in [Automated Backups](hyperscale-automated-backups-overview.md#reduce-backup-storage-consumption).
+
+      - question: |
+          Can I geo-restore my Hyperscale database to another service tier, or vice-versa? 
+        answer: |
+          Currently, non-Hyperscale service tiers (Standard/Premium/General Purpose/Business Critical) backups cannot be geo-restored into a Hyperscale service tier and vice-versa. To convert a non-Hyperscale database to a Hyperscale database, change the service tier after a restore.
 
   - name: Performance questions
     questions:
