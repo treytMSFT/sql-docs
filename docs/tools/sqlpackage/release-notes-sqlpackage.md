@@ -35,10 +35,10 @@ dotnet tool install -g microsoft.sqlpackage --version 162.5.57
 |Feature|Details|
 |:---|:---|
 | Dacpacs | System dacpac updates for Synapse Serverless and Azure SQL Database. |
-| Diagnostics | Adds a new command line parameter to specify the logging level. **/DiagnosticsLevel:{Off|Critical|Error|Warning|Information|Verbose} (short form /dl)** |
-| Diagnostics | Adds a new command line parameter to output a `.zip` diagnostics package, containing target and source model information along with diagnostic logging, deploy script, and deploy report. **/DiagnosticPackageFile:{file path}` |
-| Fabric Data Warehouse | Adds support for extract and publish for Fabric Data Warehouse databases with table alter supported. |
-| SQL database in Fabric | Adds support for [SQL database in Fabric]() in the target platform `SqlDbFabricDatabaseSchemaProvider`. |
+| Diagnostics | Adds a new command line parameter to specify the logging level. `/DiagnosticsLevel:` |
+| Diagnostics | Adds a new command line parameter to output a `.zip` diagnostics package, containing target and source model information along with diagnostic logging, deploy script, and deploy report. `/DiagnosticPackageFile:` |
+| Fabric Data Warehouse | Adds support for publish to Fabric Data Warehouse databases where table alter statements are required. |
+| SQL database in Fabric | Adds support for [SQL database in Fabric](/fabric/database/sql/overview) in the target platform `SqlDbFabricDatabaseSchemaProvider`. |
 
 ### Fixes
 
