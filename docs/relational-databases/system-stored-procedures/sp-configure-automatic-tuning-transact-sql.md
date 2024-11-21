@@ -78,7 +78,7 @@ The desired state of the configuration setting. *@option_value* is **varchar(60)
 
 ## Check the current configuration values
 
-You can also check to see which configuration options are set, by viewing the output of the [sys.database_automatic_tuning_configuration](../system-catalog-views/sys-database-automatic-tuning-configuration-transact-sql.md) catalog view. Changes to the catalog view are also written to the [!INCLUDE [ssnoversion-md](../../includes/ssnoversion-md.md)] error log.
+You can also check to see which configuration options are set, by viewing the output of the [sys.database_automatic_tuning_configurations](../system-catalog-views/sys-database-automatic-tuning-configurations-transact-sql.md) catalog view. Changes to the catalog view are also written to the [!INCLUDE [ssnoversion-md](../../includes/ssnoversion-md.md)] error log.
 
 ## Permissions
 
@@ -151,4 +151,4 @@ EXECUTE sys.sp_configure_automatic_tuning 'FORCE_LAST_GOOD_PLAN_EXTENDED_CHECK',
 - [sys.database_query_store_options (Transact-SQL)](../system-catalog-views/sys-database-query-store-options-transact-sql.md)
 - [sys.dm_db_tuning_recommendations (Transact-SQL)](../system-dynamic-management-views/sys-dm-db-tuning-recommendations-transact-sql.md)
 - [sys.database_automatic_tuning_mode](../system-catalog-views/sys-database-automatic-tuning-mode-transact-sql.md)
-- [sys.database_automatic_tuning_configuration (Transact-SQL)](../system-catalog-views/sys-database-automatic-tuning-configuration-transact-sql.md)
+- [sys.database_automatic_tuning_configurations (Transact-SQL)](../system-catalog-views/sys-database-automatic-tuning-configurations-transact-sql.md)
