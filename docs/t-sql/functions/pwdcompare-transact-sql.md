@@ -57,8 +57,10 @@ PWDCOMPARE ( 'clear_text_password'
   
 ## Permissions  
  PWDENCRYPT is available to public.  
-  
- CONTROL SERVER permission is required to examine the password_hash column of sys.sql_logins.  
+
+ To examine the *password_hash* column of **sys.sql_logins**:
+For [!INCLUDE [sssql19-md](../../includes/sssql19-md.md)] and earlier versions, the **CONTROL SERVER** permission is required.
+For [!INCLUDE [sssql22-md](../../includes/sssql22-md.md)] and later versions, the **VIEW ANY CRYPTOGRAPHICALLY SECURED DEFINITION** permission is required.  
   
 ## Examples  
   
@@ -81,5 +83,4 @@ WHERE PWDCOMPARE('password', password_hash) = 1 ;
 ## See Also  
  [PWDENCRYPT &#40;Transact-SQL&#41;](../../t-sql/functions/pwdencrypt-transact-sql.md)   
  [Security Functions &#40;Transact-SQL&#41;](../../t-sql/functions/security-functions-transact-sql.md)  
-  
-  
+ [sys.sql_logins &#40;Transact-SQL&#41;](../../relational-databases/system-catalog-views/sys-sql-logins-transact-sql.md)  
