@@ -1,7 +1,7 @@
 ---
 title: Availability through local and zone redundancy
 titleSuffix: Azure SQL Database
-description: Learn about the architecture of Azure SQL Database that achieves availability through local redundancy, and high availability through zone redundancy. 
+description: Learn about the architecture of Azure SQL Database that achieves availability through local redundancy, and high availability through zone redundancy.
 author: WilliamDAssafMSFT
 ms.author: wiassaf
 ms.reviewer: rsetlem, mathoma, randolphwest
@@ -10,8 +10,9 @@ ms.service: azure-sql-database
 ms.subservice: high-availability
 ms.topic: conceptual
 ms.custom:
-  - "references_regions"
-  - "azure-sql-split"
+  - references_regions
+  - azure-sql-split
+  - ignite-2024
 monikerRange: "=azuresql || =azuresql-db || =fabricsql"
 ---
 

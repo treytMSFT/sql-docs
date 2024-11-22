@@ -1,7 +1,7 @@
 ---
 title: Microsoft Entra logins and users with nonunique display names
 titleSuffix: Azure SQL Database and Azure SQL Managed Instance
-description: Learn how to mitigate naming conflicts for Microsoft Entra logins and users with nonunique display names by using the T-SQL Object_ID syntax, currently in preview. 
+description: Learn how to mitigate naming conflicts for Microsoft Entra logins and users with nonunique display names by using the T-SQL Object_ID syntax, currently in preview.
 author: tameikal-msft
 ms.author: talawren
 ms.reviewer: vanto, mathoma, jaszymas
@@ -9,7 +9,9 @@ ms.date: 11/20/2024
 ms.service: azure-sql
 ms.subservice: security
 ms.topic: conceptual
-monikerRange: "= azuresql || = azuresql-db || = azuresql-mi ||=fabricsql"
+ms.custom:
+  - ignite-2024
+monikerRange: "=azuresql || =azuresql-db || =azuresql-mi || =fabricsql"
 ---
 
 # Microsoft Entra logins and users with nonunique display names (preview)

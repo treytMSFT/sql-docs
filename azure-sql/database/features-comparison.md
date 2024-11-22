@@ -11,7 +11,8 @@ ms.subservice: service-overview
 ms.topic: conceptual
 ms.custom:
   - build-2024
-monikerRange: "=azuresql||=azuresql-db||=azuresql-mi"
+  - ignite-2024
+monikerRange: "=azuresql || =azuresql-db || =azuresql-mi"
 ---
 
 # Features comparison: Azure SQL Database and Azure SQL Managed Instance

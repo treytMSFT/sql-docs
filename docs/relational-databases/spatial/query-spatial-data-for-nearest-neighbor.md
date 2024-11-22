@@ -3,11 +3,13 @@ title: "Query spatial data for nearest neighbor"
 description: "Query spatial data for nearest neighbor, used to find the closest spatial objects to a specific spatial object."
 author: WilliamDAssafMSFT
 ms.author: wiassaf
-ms.reviwer: mlandzic, jovanpop
+ms.reviewer: mlandzic, jovanpop
 ms.date: 11/04/2024
 ms.service: sql
 ms.topic: conceptual
-monikerRange: "=azuresqldb-current||>=sql-server-2016||>=sql-server-linux-2017||=azuresqldb-mi-current||=fabric"
+ms.custom:
+  - ignite-2024
+monikerRange: "=azuresqldb-current || >=sql-server-2016 || >=sql-server-linux-2017 || =azuresqldb-mi-current || =fabric"
 ---
 # Query spatial data for nearest neighbor
 
