@@ -8,6 +8,8 @@ ms.date: 09/18/2024
 ms.service: sql
 ms.subservice: system-objects
 ms.topic: reference
+ms.custom:
+  - ignite-2024
 f1_keywords:
   - "sp_configure_automatic_tuning"
   - "sp_configure_TSQL"
@@ -15,7 +17,7 @@ helpviewer_keywords:
   - "sp_configure_automatic_tuning"
 dev_langs:
   - "TSQL"
-monikerRange: ">=sql-server-2017 || >=sql-server-linux-2017 || =azuresqldb-mi-current || =azuresqldb-current ||=fabric"
+monikerRange: ">=sql-server-2017 || >=sql-server-linux-2017 || =azuresqldb-mi-current || =azuresqldb-current || =fabric"
 ---
 # sp_configure_automatic_tuning (Transact-SQL)
 

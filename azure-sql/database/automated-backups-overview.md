@@ -13,7 +13,8 @@ ms.custom:
   - references_regions
   - azure-sql-split
   - build-2024
-monikerRange: "=azuresql||=azuresql-db"
+  - ignite-2024
+monikerRange: "=azuresql || =azuresql-db"
 ---
 # Automated backups in Azure SQL Database
 

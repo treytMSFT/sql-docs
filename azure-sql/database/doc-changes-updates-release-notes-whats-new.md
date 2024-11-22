@@ -5,13 +5,14 @@ description: Learn about the new features and documentation improvements for Azu
 author: WilliamDAssafMSFT
 ms.author: wiassaf
 ms.reviewer: mathoma, randolphwest
-ms.service: azure-sql-database
 ms.date: 11/19/2024
+ms.service: azure-sql-database
 ms.subservice: service-overview
 ms.topic: whats-new
 ms.custom:
   - build-2024
-monikerRange: "=azuresql||=azuresql-db"
+  - ignite-2024
+monikerRange: "=azuresql || =azuresql-db"
 ---
 # What's new in Azure SQL Database?
 

@@ -12,6 +12,7 @@ ms.collection:
   - sql-migration-content
 ms.custom:
   - seo-lt-2019
+  - ignite-2024
 ---
 
 # Tutorial: Migrate SQL Server to Azure SQL Managed Instance with DMS

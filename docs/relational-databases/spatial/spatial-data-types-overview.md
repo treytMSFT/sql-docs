@@ -3,16 +3,18 @@ title: "Spatial Data Types Overview"
 description: "Spatial Data Types represent information about the physical location and shape of geometric objects in the SQL Database Engine."
 author: WilliamDAssafMSFT
 ms.author: wiassaf
-ms.reviwer: mlandzic, jovanpop
+ms.reviewer: mlandzic, jovanpop
 ms.date: 11/04/2024
 ms.service: sql
 ms.topic: conceptual
+ms.custom:
+  - ignite-2024
 helpviewer_keywords:
   - "geometry data type [SQL Server], understanding"
   - "geography data type [SQL Server], spatial data"
   - "planar spatial data [SQL Server], geometry data type"
   - "spatial data types [SQL Server]"
-monikerRange: "=azuresqldb-current||>=sql-server-2016||>=sql-server-linux-2017||=azuresqldb-mi-current||=fabric"
+monikerRange: "=azuresqldb-current || >=sql-server-2016 || >=sql-server-linux-2017 || =azuresqldb-mi-current || =fabric"
 ---
 # Spatial Data Types Overview
 
