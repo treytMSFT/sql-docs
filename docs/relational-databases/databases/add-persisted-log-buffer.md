@@ -46,7 +46,7 @@ Use the following syntax to add a persistent log buffer to an existing database.
 ### Add persistent log buffer in [!INCLUDE[sssql17-md](../../includes/sssql17-md.md)] and later
 
 ```sql
-ALTER DATABASE [DB] SET PERSISTENT_LOG_BUFFER = ON (DIRECTORY_NAME = 'path-to-directory');
+ALTER DATABASE [DB] SET PERSISTENT_LOG_BUFFER = ON (DIRECTORY_NAME = 'path-to-directory-on-a-DAX-volume');
 ```
 
 For example:
@@ -63,7 +63,7 @@ The name of the persistent log file buffer is generated automatically. The size 
 ALTER DATABASE [DB] ADD LOG FILE
 (
 NAME = [DAXlogLogicalName],
-FILENAME = 'path-to-dax-log-file>',
+FILENAME = 'path-to-log-file-on-a-DAX-volume',
 SIZE = 20 MB
 );
 ```

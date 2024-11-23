@@ -105,7 +105,7 @@ SET
   | <query_store_options>
   | <recovery_option>
   | <remote_data_archive_option>
-  | <persistent_log_file_option>
+  | <persistent_log_buffer_option>
   | <service_broker_option>
   | <snapshot_option>
   | <sql_option>
@@ -263,12 +263,12 @@ SET
     }
 }
 
-<persistent_log_file_option> ::=
+<persistent_log_buffer_option> ::=
 {
     PERSISTENT_LOG_BUFFER 
     {
-          = OFF
-        | = ON (DIRECTORY_NAME= 'directory-name-on-a-DAX-formatted-volume')
+          = ON (DIRECTORY_NAME= 'path-to-directory-on-a-DAX-volume')
+        | = OFF
     }
 }
 

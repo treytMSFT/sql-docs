@@ -101,7 +101,7 @@ CREATE DATABASE database_name
     | TWO_DIGIT_YEAR_CUTOFF = <two_digit_year_cutoff>
     | DB_CHAINING { OFF | ON }
     | TRUSTWORTHY { OFF | ON }
-    | PERSISTENT_LOG_BUFFER=ON ( DIRECTORY_NAME='directory-name-on-a-DAX-formatted-volume' )
+    | PERSISTENT_LOG_BUFFER=ON ( DIRECTORY_NAME='path-to-directory-on-a-DAX-volume' )
     | LEDGER = {ON | OFF }
 }
 
