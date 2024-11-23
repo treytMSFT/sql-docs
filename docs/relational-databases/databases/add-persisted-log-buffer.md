@@ -1,6 +1,6 @@
 ---
-title: "Add persisted log buffer to a database"
-description: "Explains how to add a persisted log buffer to a database in SQL Server 2019 and later. Provides Transact SQL examples."
+title: "Add persistent log buffer to a database"
+description: "Explains how to add a persistent log buffer to a database in SQL Server 2016 and later. Provides Transact SQL examples."
 author: "briancarrig"
 ms.author: "brcarrig"
 ms.reviewer: mikeray
@@ -12,17 +12,18 @@ ms.topic: conceptual
 helpviewer_keywords:
   - "PMEM"
   - "persistent memory"
+  - "persistent log buffer"
   - "persisted log buffer"
   - "add log file"
   - "create log buffer"
   - "remove log buffer"
 ---
 
-# Add persisted log buffer to a database
+# Add persistent log buffer to a database
 
 [!INCLUDE [SQL Server](../../includes/applies-to-version/sqlserver.md)]
 
-This topic describes how to add a persisted log buffer to a database in [!INCLUDE[sqlv16](../../includes/sssql16-md.md)] and above using [!INCLUDE[tsql](../../includes/tsql-md.md)].
+This topic describes how to add and remove a persistent log buffer to a database in [!INCLUDE[sqlv16](../../includes/sssql16-md.md)] and above using [!INCLUDE[tsql](../../includes/tsql-md.md)].
 
 ## Permissions
 
@@ -36,13 +37,13 @@ To configure a persistent memory device in [Linux](../../linux/sql-server-linux-
 
 To configure a persistent memory device in [Windows](../../database-engine/configure-windows/configure-persistent-memory.md).
   
-## Add a persisted log buffer to a database
-
-Use the following syntax to add a persisted log buffer to an existing database. The syntax differs depending on the version of [!INCLUDE[ssnoversion-md](../../includes/ssnoversion-md.md)].
+## Add a persistent log buffer to a database
 
 The volume or the mount point for the new log file must be formatted with DAX enabled (NTFS) or mounted with the DAX option (XFS/EXT4).
 
-### Add persisted log file in [!INCLUDE[sssql17-md](../../includes/sssql17-md.md)] and later
+Use the following syntax to add a persistent log buffer to an existing database. The syntax differs depending on the version of [!INCLUDE[ssnoversion-md](../../includes/ssnoversion-md.md)].
+
+### Add persistent log buffer in [!INCLUDE[sssql17-md](../../includes/sssql17-md.md)] and later
 
 ```sql
 ALTER DATABASE [DB] SET PERSISTENT_LOG_BUFFER = ON (DIRECTORY_NAME = 'path-to-directory');
@@ -54,9 +55,9 @@ For example:
 ALTER DATABASE WideWorldImporters SET PERSISTENT_LOG_BUFFER = ON (DIRECTORY_NAME = 'F:\SQLTLog');
 ```
 
-The name of the persisted log file buffer is generated automatically. The size of the file is always 20 megabytes.
+The name of the persistent log file buffer is generated automatically. The size of the file is always 20 megabytes.
 
-### Add persisted log file in [!INCLUDE[sqlv16](../../includes/sssql16-md.md)]
+### Add persistent log buffer in [!INCLUDE[sqlv16](../../includes/sssql16-md.md)]
 
 ```sql
 ALTER DATABASE [DB] ADD LOG FILE
@@ -78,17 +79,17 @@ SIZE = 20 MB
 );
 ```
 
-The log file on the DAX volume will be sized at 20 megabytes regardless of the size specified with the `ALTER DATABASE ADD LOG FILE` command.
+The log buffer file on the DAX volume will be sized at 20 megabytes regardless of the size specified with the `ALTER DATABASE ADD LOG FILE` command.
 
-## Remove a persisted log buffer from a database
+## Remove a persistent log buffer from a database
+
+To safely remove a persistent log buffer, the database must be placed in single user mode in order to drain the persistent log buffer.
+
+When you remove a persistent log buffer, the log buffer file on disk is deleted.
 
 The syntax differs depending on the version of [!INCLUDE[ssnoversion-md](../../includes/ssnoversion-md.md)].
 
-To safely remove a persisted log buffer, the database must be placed in single user mode in order to drain the persisted log buffer.
-
-When you remove a persisted log buffer, the log file on disk is deleted.
-
-### Remove persisted log file in [!INCLUDE[sssql17-md](../../includes/sssql17-md.md)] and later
+### Remove persistent log buffer in [!INCLUDE[sssql17-md](../../includes/sssql17-md.md)] and later
 
 ```sql
 ALTER DATABASE [DB] SET PERSISTENT_LOG_BUFFER = OFF;
@@ -100,7 +101,7 @@ For example:
 ALTER DATABASE WideWorldImporters SET PERSISTENT_LOG_BUFFER = OFF;
 ```
 
-### Remove persisted log file in [!INCLUDE[sqlv16](../../includes/sssql16-md.md)]
+### Remove persistent log buffer in [!INCLUDE[sqlv16](../../includes/sssql16-md.md)]
 
 ```sql
 ALTER DATABASE [DB] SET SINGLE_USER;
@@ -118,19 +119,20 @@ ALTER DATABASE WideWorldImporters SET MULTI_USER;
 
 ## Limitations
 
-[Transparent Data Encryption (TDE)](../security/encryption/transparent-data-encryption.md) is not compatible with persisted log buffer.
+[Transparent Data Encryption (TDE)](../security/encryption/transparent-data-encryption.md) is not compatible with persistent log buffer.
 
-[Availability Groups](../../t-sql/statements/create-availability-group-transact-sql.md) can only use this feature on secondary replicas due to the requirement by the log reader agent for standard log writing semantics on the primary. However, a small log file must be created on all nodes (ideally on DAX volumes or mounts). In the event of a failover, the persisted log buffer path must exist, in order for the failover to be successful.
+[Availability Groups](../../t-sql/statements/create-availability-group-transact-sql.md) can only use this feature on secondary replicas due to the requirement by the log reader agent for standard log writing semantics on the primary. However, a small log file must be created on all nodes (ideally on DAX volumes or mounts). In the event of a failover, the persistent log buffer path must exist, in order for the failover to be successful.
 
-In cases where the path or file isn't present during an Availability Group failover event, or database startup, the database enters a `RECOVERY PENDING` state until the issue is resolved.
+> [!CAUTION]
+> If the persistent log buffer path or file isn't present during an Availability Group failover event, or database startup, the database enters a `RECOVERY PENDING` state until the issue is resolved.
 
 ## Interoperability with other PMEM features
 
-When both persisted log buffer and [Hybrid Buffer Pool](../../database-engine/configure-windows/hybrid-buffer-pool.md) are enabled, along with the start up [trace flag 809](../../t-sql/database-console-commands/dbcc-traceon-trace-flags-transact-sql.md), Hybrid Buffer Pool will operate in what is known as _Direct Write_ mode.
+When both persistent log buffer and [Hybrid Buffer Pool](../../database-engine/configure-windows/hybrid-buffer-pool.md) are enabled, along with the start up [trace flag 809](../../t-sql/database-console-commands/dbcc-traceon-trace-flags-transact-sql.md), Hybrid Buffer Pool will operate in what is known as _Direct Write_ mode.
 
 ## Back up and restore operations
 
-Normal restore conditions apply. If persisted log buffer is restored to a DAX volume or mount, it continues to function. If the log is restored to a regular disk volume, it can be safely removed.
+Normal restore conditions apply. If persistent log buffer is restored to a DAX volume or mount, it continues to function. If the log is restored to a non-DAX disk volume, it can be safely removed using the `ALTER DATABASE REMOVE FILE` command.
 
 ## Next steps
 

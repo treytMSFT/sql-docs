@@ -101,7 +101,7 @@ CREATE DATABASE database_name
     | TWO_DIGIT_YEAR_CUTOFF = <two_digit_year_cutoff>
     | DB_CHAINING { OFF | ON }
     | TRUSTWORTHY { OFF | ON }
-    | PERSISTENT_LOG_BUFFER=ON ( DIRECTORY_NAME='<Filepath to folder on DAX formatted volume>' )
+    | PERSISTENT_LOG_BUFFER=ON ( DIRECTORY_NAME='directory-name-on-a-DAX-formatted-volume' )
     | LEDGER = {ON | OFF }
 }
 
@@ -288,7 +288,7 @@ The following options are allowable only when CONTAINMENT has been set to PARTIA
 
 **Applies to**: [!INCLUDE[ssSQL17](../../includes/sssql17-md.md)] and later.
 
-When this option is specified, the transaction log buffer is created on a volume that is located on a disk device backed by Storage Class Memory (NVDIMM-N nonvolatile storage), also known as a persistent log buffer. For more information, see [Transaction Commit latency acceleration using Storage Class Memory](/archive/blogs/sqlserverstorageengine/transaction-commit-latency-acceleration-using-storage-class-memory-in-windows-server-2016sql-server-2016-sp1) and [Add persisted log buffer to a database](../../relational-databases/databases/add-persisted-log-buffer.md).
+When this option is specified, the transaction log buffer is created on a volume that is located on a disk device backed by Storage Class Memory (NVDIMM-N nonvolatile storage), also known as a persistent log buffer. For more information, see [Transaction Commit latency acceleration using Storage Class Memory](/archive/blogs/sqlserverstorageengine/transaction-commit-latency-acceleration-using-storage-class-memory-in-windows-server-2016sql-server-2016-sp1) and [Add persistent log buffer to a database](../../relational-databases/databases/add-persisted-log-buffer.md).
 
 #### LEDGER = {ON | OFF }
 
