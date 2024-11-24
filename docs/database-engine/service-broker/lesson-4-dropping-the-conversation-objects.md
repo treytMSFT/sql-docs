@@ -37,8 +37,8 @@ In this lesson, you will learn to drop the objects that enabled a database to su
     ```sql
         IF EXISTS (SELECT * FROM sys.objects
                    WHERE name =
-                   N'TargetActivProc')
-             DROP PROCEDURE TargetActivProc;
+                   N'TargetActiveProc')
+             DROP PROCEDURE TargetActiveProc;
 
         IF EXISTS (SELECT * FROM sys.services
                    WHERE name =
