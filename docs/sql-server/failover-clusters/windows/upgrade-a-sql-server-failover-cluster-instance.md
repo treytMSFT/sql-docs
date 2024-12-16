@@ -20,7 +20,7 @@ helpviewer_keywords:
 
 [!INCLUDE [ssNoVersion](../../../includes/ssnoversion-md.md)] supports upgrading a failover cluster to a new version of [!INCLUDE [ssNoVersion](../../../includes/ssnoversion-md.md)], to a new [!INCLUDE [ssNoVersion](../../../includes/ssnoversion-md.md)] service pack or cumulative update, or when installing to a new Windows service pack or cumulative update separately on all failover cluster nodes, with downtime limited to a single manual failover (or two manual failovers if failing back to the original primary).
 
-Upgrading the Windows Server operating system of a node containing a failover cluster instance isn't supported for operating systems before [!INCLUDE [winserver2012r2-md](../../../includes/winserver2012r2-md.md)]. To upgrade a Windows Server failover cluster node running on [!INCLUDE [winserver2012r2-md](../../../includes/winserver2012r2-md.md)] or later versions, see [Perform a rolling upgrade or update](https://learn.microsoft.com/en-us/windows-server/failover-clustering/cluster-operating-system-rolling-upgrade).
+Upgrading the Windows Server operating system of a node containing a failover cluster instance isn't supported for operating systems before [!INCLUDE [winserver2012r2-md](../../../includes/winserver2012r2-md.md)]. To upgrade a Windows Server failover cluster node running on [!INCLUDE [winserver2012r2-md](../../../includes/winserver2012r2-md.md)] or later versions, see [Cluster OS Rolling Upgrade](/windows-server/failover-clustering/cluster-operating-system-rolling-upgrade).
 
 Support details are as follows:
 
